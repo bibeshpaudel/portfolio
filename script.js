@@ -72,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   themeToggleButton.addEventListener("click", () => {
-    // Add rotation animation
     themeToggleButton.style.transform = "rotate(360deg)";
     setTimeout(() => {
       themeToggleButton.style.transform = "rotate(0)";
@@ -141,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
         emailjs
-          .sendForm("service_id", "template_id", contactForm)
+          .sendForm("service_yl2hki7", "template_e2f9xvk", contactForm)
           .then(() => {
             submitButton.innerHTML =
               '<i class="fas fa-check"></i> Message Sent!';
