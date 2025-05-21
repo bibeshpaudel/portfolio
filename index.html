@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibesh Paudel - .NET Developer</title>
-    <link rel="icon" type="image/x-icon" href="assets\icon.png">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23282828%22%20rx%3D%222%22%20ry%3D%222%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20fill%3D%22%230D0D0D%22%20rx%3D%221%22%20ry%3D%221%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22monospace%2C%20'Courier%20New'%2C%20Courier%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%20fill%3D%22%233AF241%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3EB%3C%2Ftext%3E%3C%2Fsvg%3E">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function () {
@@ -18,243 +18,202 @@
     </script>
 </head>
 
-<body data-theme="light">
-
-    <div class="portfolio-container">
-        <header class="portfolio-header">
-            <div class="header-top-bar">
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/bibesh-paudel-5a0207225/" target="_blank"
-                        rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/bibeshpaudel" target="_blank" rel="noopener noreferrer"
-                        aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="mailto:bibesh03@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-                <a href="assets\Bibesh_Paudel_CV.pdf" download="Bibesh_Paudel_CV.pdf" class="cv-download-button"
-                    aria-label="Download CV"><i class="fas fa-download"></i> Download CV</a>
-            </div>
-            <div class="header-main">
-                <h1>Bibesh Paudel</h1>
-                <p>.NET Developer | SQL | Cloud Enthusiast</p>
-                <p class="location">
-                    <i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal
-                </p>
-                <button id="theme-toggle" aria-label="Toggle dark mode">
-                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        width="18px" height="18px">
-                        <path
-                            d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 011.06.044l1.8 1.8a.75.75 0 01-1.06 1.06l-1.8-1.8a.75.75 0 01.044-1.06zm-12.782-.044a.75.75 0 011.06-1.06l1.8 1.8a.75.75 0 11-1.06 1.06l-1.8-1.8a.75.75 0 01-.044-1.06zM19.75 12a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25a.75.75 0 01.75-.75zM3.75 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H4.5a.75.75 0 01-.75-.75zM6.106 18.894a.75.75 0 011.06.044l1.8 1.8a.75.75 0 01-1.06 1.06l-1.8-1.8a.75.75 0 01.044-1.06zM18.894 17.894a.75.75 0 011.06 1.06l-1.8 1.8a.75.75 0 01-1.06-1.06l1.8-1.8zM12 19.75a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 19.75z" />
-                    </svg>
-                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        width="18px" height="18px">
-                        <path fill-rule="evenodd"
-                            d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-3.51 1.713-6.622 4.43-8.573a.75.75 0 01.819.162z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </button>
+<body>
+    <div class="container hidden-initially" id="mainContainer">
+        <header id="pageHeader" class="hidden-initially">
+            <div class="prompt" id="headerPrompt"></div>
+            <nav id="mainNav">
+                <a href="#home" class="nav-item hidden-initially">home</a>
+                <a href="#skills" class="nav-item hidden-initially">skills</a>
+                <a href="#experience" class="nav-item hidden-initially">experience</a>
+                <a href="#education" class="nav-item hidden-initially">education</a>
+                <a href="#projects" class="nav-item hidden-initially">projects</a>
+                <a href="#contact" class="nav-item hidden-initially">contact</a>
+            </nav>
+            <div class="theme-switcher hidden-initially">
+                <label for="themeToggle" class="toggle-label">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
             </div>
         </header>
 
-        <nav class="tabs">
-            <button class="tab-button active" data-tab="about">About Me</button>
-            <button class="tab-button" data-tab="skills">Skills</button>
-            <button class="tab-button" data-tab="experience">Experience</button>
-            <button class="tab-button" data-tab="projects">Projects</button>
-            <button class="tab-button" data-tab="education">Education</button>
-            <button class="tab-button" data-tab="contact">Contact</button>
-        </nav>
-
-        <main class="tab-content-area">
-            <section id="about" class="tab-content active">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <img src="assets\Bibesh_Paudel_Profile.jpeg" alt="Bibesh Paudel" class="profile-photo">
-                    <div>
-                        <p>
-                            Experienced and results-driven <strong>.NET Developer</strong> with <strong>4 years</strong>
-                            of hands-on experience in designing, developing, and deploying <strong>web applications and
-                                APIs</strong> using <strong>ASP.NET Core</strong>, <strong>C#</strong>, <strong>SQL
-                                Server</strong>, and <strong>Entity Framework Core</strong>.
-                        </p>
-                        <p>
-                            Strong advocate of <strong>clean code</strong>, <strong>SOLID principles</strong>, and
-                            scalable architecture. Skilled in full-cycle development, from database to deployment.
-                            Thrive in <strong>collaborative teams</strong> and agile environments, with a constant drive
-                            to <strong>learn and innovate</strong>.
-                        </p>
+        <main>
+            <section id="home" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Introduction</h2>
+                </div>
+                <div class="section-content hidden-initially">
+                    <p class="hidden-initially">Hello, I'm Bibesh Paudel, a passionate .NET Developer, SQL & Cloud
+                        Enthusiast based in Kathmandu, Nepal.</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/bibesh-paudel-5a0207225/" target="_blank" title="LinkedIn"
+                            class="hidden-initially">LinkedIn</a>
+                        <a href="https://github.com/bibeshpaudel" target="_blank" title="GitHub"
+                            class="hidden-initially">GitHub</a>
+                        <a href="mailto:bibesh03@gmail.com" title="Email" class="hidden-initially">Email</a>
+                        <a href="assets\Bibesh_Paudel_CV.pdf" download="Bibesh_Paudel_CV.pdf"
+                            class="button hidden-initially">Download CV</a>
                     </div>
                 </div>
             </section>
 
-            <section id="skills" class="tab-content">
-                <h2>Skills</h2>
-                <div class="skill-category">
-                    <h3>Languages & Frameworks</h3>
-                    <ul>
-                        <li>C#</li>
-                        <li>.NET Core / .NET 6+</li>
-                        <li>ASP.NET Core (MVC, Web API, Razor Pages)</li>
-                        <li>Entity Framework Core</li>
-                        <li>LINQ</li>
-                        <li>HTML5, CSS3, JavaScript, Jquery</li>
-                        <li>Blazor</li>
-                        <li>Dart / Flutter</li>
-                    </ul>
+            <hr class="section-divider hidden-initially">
+
+            <section id="skills" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Skills</h2>
                 </div>
-                <div class="skill-category">
-                    <h3>Databases</h3>
-                    <ul>
-                        <li>SQL Server</li>
-                        <li>PostgreSQL / MySQL</li>
-                        <!-- <li>Azure SQL Database</li> -->
-                        <!-- <li>NoSQL (e.g., Cosmos DB, MongoDB)</li> -->
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Cloud & DevOps</h3>
-                    <ul>
-                        <!-- <li>Azure (App Services, Functions, SQL Database, Blob Storage, DevOps)</li> -->
-                        <li>Docker</li>
-                        <li>Git / GitHub</li>
-                        <!-- <li>CI/CD Pipelines</li> -->
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools & Concepts</h3>
-                    <ul>
-                        <li>Visual Studio / VS Code</li>
-                        <li>RESTful APIs</li>
-                        <li>Unit Testing (xUnit, NUnit)</li>
-                        <li>Dependency Injection</li>
-                        <li>SOLID Principles</li>
-                        <li>Agile/Scrum Methodologies</li>
-                    </ul>
+                <div class="skills-grid section-content hidden-initially">
+                    <!-- Skills will be populated by script.js into categories -->
                 </div>
             </section>
 
-            <section id="experience" class="tab-content">
-                <h2>Work Experience</h2>
-                <div class="job">
-                    <h3>.NET Developer</h3>
-                    <p class="company-dates">IME Limited | Apr 2022 - Present</p>
-                    <ul>
-                        <li>Collaborated with cross-functional teams to design and implement RESTful APIs for a
-                            large-scale fintech platform.</li>
-                        <li>Developed and maintained SOAP-based integrations with third-party services to ensure
-                            seamless data exchange.</li>
-                        <li>Built and maintained ASP.NET Web Forms and MVC applications, improving user experience and
-                            streamlining business processes.</li>
-                        <li>Designed and optimized SQL Server stored procedures, views, and functions for complex data
-                            operations.</li>
-                        <li>Integrated IoT devices into applications for real-time data collection and analysis.</li>
-                        <li>Conducted code reviews and mentored junior developers to support team growth and maintain
-                            code quality.</li>
-                    </ul>
+            <hr class="section-divider hidden-initially">
+
+            <section id="experience" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Work Experience</h2>
                 </div>
-                <div class="job">
-                    <h3>.NET Internship</h3>
-                    <p class="company-dates">Swift Technology Pvt. Ltd. | Dec 2021 - Mar 2022</p>
-                    <ul>
-                        <li>Gained hands-on experience in C#, ASP.NET Web Forms, ASP.NET Core, SQL Server, jQuery, and
-                            front-end development.</li>
-                        <li>Built responsive and user-friendly interfaces for web applications.</li>
-                        <li>Optimized database queries and performance for better efficiency.</li>
-                        <li>Developed robust backend systems to support application functionality.</li>
-                        <li>Learned and applied industry-standard coding practices and professional work ethics.</li>
-                    </ul>
+                <div class="timeline section-content hidden-initially">
+                    <div class="timeline-item hidden-initially">
+                        <h3>.NET Developer</h3>
+                        <p class="company-duration">IME Limited | Apr 2022 - Present</p>
+                        <ul>
+                            <li>Collaborated with cross-functional teams to design and implement RESTful APIs for a
+                                large-scale fintech platform.</li>
+                            <li>Developed and maintained SOAP-based integrations with third-party services to ensure
+                                seamless data exchange.</li>
+                            <li>Built and maintained ASP.NET Web Forms and MVC applications, improving user experience
+                                and streamlining business processes.</li>
+                            <li>Designed and optimized SQL Server stored procedures, views, and functions for complex
+                                data operations.</li>
+                            <li>Integrated IoT devices into applications for real-time data collection and analysis.
+                            </li>
+                            <li>Conducted code reviews and mentored junior developers to support team growth and
+                                maintain code quality.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item hidden-initially">
+                        <h3>.NET Internship</h3>
+                        <p class="company-duration">Swift Technology Pvt. Ltd. | Dec 2021 - Mar 2022</p>
+                        <ul>
+                            <li>Gained hands-on experience in C#, ASP.NET Web Forms, ASP.NET Core, SQL Server, jQuery,
+                                and front-end development.</li>
+                            <li>Built responsive and user-friendly interfaces for web applications.</li>
+                            <li>Optimized database queries and performance for better efficiency.</li>
+                            <li>Developed robust backend systems to support application functionality.</li>
+                            <li>Learned and applied industry-standard coding practices and professional work ethics.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
-            <section id="projects" class="tab-content">
-                <h2>Personal Projects</h2>
-                <div class="project">
-                    <h3>Ghumfhir</h3>
-                    <p>Ghumfhir is an AI-driven web app that helps travelers find ideal companions and personalized
-                        destination recommendations. It tailors travel experiences by matching users based on interests,
-                        preferences, and travel styles.</p>
-                    <p><strong>Technologies:</strong> .NET Core Web API, EF Core, PostgreSQL</p>
-                    <p><a href="javascript:void(0)" rel="noopener noreferrer">Coming Soon...</a></p>
+            <hr class="section-divider hidden-initially">
+
+            <section id="education" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Education</h2>
                 </div>
-                <h2>Enterprise Solutions</h2>
-                <div class="project">
-                    <h3>IME India</h3>
-                    <p>IME India, an RBI-authorized Full Fledged Money Changer (FFMC), provides comprehensive financial
-                        services, including foreign currency exchange, domestic and Indo-Nepal remittance, and digital
-                        payment solutions in India.</p>
-                    <p><strong>Technologies:</strong> .NET Webforms, .NET Web API, SQL Server, jQuery</p>
-                    <p><a href="https://imeindia.com/" target="_blank" rel="noopener noreferrer">IME India Overview</a>
-                    </p>
-                </div>
-                <div class="project">
-                    <h3>IME Remit</h3>
-                    <p>IME Remit, a leading provider of remittance services and financial solutions in Nepal, operates
-                        under the authorization of Nepal Rastra Bank. The company serves a large network both
-                        domestically and internationally, facilitating secure money transfers, foreign currency
-                        exchange, and digital wallet services.</p>
-                    <p><strong>Technologies:</strong> .NET Webforms, .NET Core Web API, .NET Core MVC, SQL Server,
-                        jQuery</p>
-                    <p><a href="https://imeremit.com.np/" target="_blank" rel="noopener noreferrer">IME Remit
-                            Overview</a></p>
+                <div class="section-content hidden-initially">
+                    <div class="education-item hidden-initially">
+                        <h3>Bachelor of Engineering in Information Technology (BE IT)</h3>
+                        <p>Nepal College of Information Technology (Pokhara University) | Lalitpur, Nepal | Graduated:
+                            2023</p>
+                    </div>
+                    <div class="education-item hidden-initially">
+                        <h3>+2 (Science)</h3>
+                        <p>Vidya Mandir Secondary School (NEB) | Baglung, Nepal | Graduated: 2017</p>
+                    </div>
                 </div>
             </section>
 
-            <section id="education" class="tab-content">
-                <h2>Education</h2>
-                <div class="education-entry">
-                    <h3>+2 (Science)</h3>
-                    <p>Vidya Mandir Secondary School (NEB) | Baglung, Nepal | 2017</p>
+            <hr class="section-divider hidden-initially">
+
+            <section id="projects" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Projects</h2>
                 </div>
-                <div class="education-entry">
-                    <h3>Bachelor of Engineering in Information Technology (BE IT)</h3>
-                    <p>Nepal College of Information Technology (Pokhara University) | Lalitpur, Nepal | 2023</p>
+                <div class="section-content hidden-initially">
+                    <div class="project-subsection">
+                        <h3 class="hidden-initially">Personal Projects</h3>
+                        <div class="project-item hidden-initially">
+                            <h4>Ghumfhir</h4>
+                            <p>Ghumfhir is an AI-driven web app that helps travelers find ideal companions and
+                                personalized destination recommendations. It tailors travel experiences by matching
+                                users based on interests, preferences, and travel styles.</p>
+                            <p class="technologies"><span>Technologies:</span> .NET Core Web API, EF Core, PostgreSQL
+                            </p>
+                            <p><em>Link: To be added soon.</em></p>
+                        </div>
+                    </div>
+                    <div class="project-subsection">
+                        <h3 class="hidden-initially">Professional Projects</h3>
+                        <div class="project-item hidden-initially">
+                            <h4>IME India (Enterprise Solution)</h4>
+                            <p>IME India, an RBI-authorized Full Fledged Money Changer (FFMC), provides comprehensive
+                                financial services, including foreign currency exchange, domestic and Indo-Nepal
+                                remittance, and digital payment solutions in India.</p>
+                            <p class="technologies"><span>Technologies:</span> .NET Webforms, .NET Web API, SQL Server,
+                                jQuery</p>
+                            <p><a href="https://imeindia.com/" target="_blank"
+                                    title="Details for IME India">[view_details]</a></p>
+                        </div>
+                        <div class="project-item hidden-initially">
+                            <h4>IME Remit (Enterprise Solution)</h4>
+                            <p>IME Remit, a leading provider of remittance services and financial solutions in Nepal,
+                                operates under the authorization of Nepal Rastra Bank. The company serves a large
+                                network both domestically and internationally, facilitating secure money transfers,
+                                foreign currency exchange, and digital wallet services.</p>
+                            <p class="technologies"><span>Technologies:</span> .NET Webforms, .NET Core Web API, .NET
+                                Core MVC, SQL Server, jQuery</p>
+                            <p><a href="https://imeremit.com.np/" target="_blank"
+                                    title="Details for IME Remit">[view_details]</a></p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="contact" class="tab-content">
-                <h2>Get In Touch</h2>
-                <p>I'm always open to discussing new opportunities or collaborations. Feel free to reach out!</p>
-                <form id="contact-form">
+            <hr class="section-divider hidden-initially">
+
+            <section id="contact" class="page-section">
+                <div class="section-header">
+                    <div class="prompt section-prompt hidden-initially"></div>
+                    <h2 class="section-title hidden-initially">Contact Me</h2>
+                </div>
+                <form id="contactForm" class="section-content hidden-initially">
                     <div class="form-group">
                         <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name">
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject:</label>
-                        <input type="text" id="subject" name="subject">
+                        <input type="email" id="email" name="email">
+                        <div class="error-message"></div>
                     </div>
                     <div class="form-group">
                         <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5"></textarea>
+                        <div class="error-message"></div>
                     </div>
-                    <button type="submit" class="submit-button">Send Message</button>
+                    <button type="submit" class="button contactForm-submit">send_message</button>
                 </form>
-                <div class="contact-info">
-                    <h3>Other Ways to Connect:</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> <strong>Email:</strong> <a
-                                href="mailto:bibesh03@gmail.com">bibesh03@gmail.com</a></li>
-                        <li><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a
-                                href="https://www.linkedin.com/in/bibesh-paudel-5a0207225/" target="_blank"
-                                rel="noopener noreferrer">Bibesh Paudel</a></li>
-                        <li><i class="fab fa-github"></i> <strong>GitHub:</strong> <a
-                                href="https://github.com/bibeshpaudel" target="_blank"
-                                rel="noopener noreferrer">https://github.com/bibeshpaudel</a></li>
-                        <li><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Kathmandu, Nepal</li>
-                    </ul>
-                </div>
+                <p id="formStatus" class="hidden-initially"></p>
             </section>
         </main>
 
-        <footer class="portfolio-footer">
-            <p>© <span id="current-year"></span>&nbsp;Bibesh Paudel</p>
+        <footer id="pageFooter" class="hidden-initially">
+            <div class="prompt">C:\Users\Guest></div>
+            <p>© <span id="currentYear"></span> Bibesh Paudel. All rights reserved. _</p>
         </footer>
-
     </div>
-
     <script src="script.js"></script>
 </body>
 
