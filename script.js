@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pageHeader.classList.add("visible");
     quickRevealText(
       headerPromptEl,
-      "C:\\Users\\Guest>",
+      "C:\\Users\\Bibesh>",
       VERY_FAST_TYPE_SPEED,
       async () => {
         await revealSequentially(
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await new Promise((resolve) =>
         quickRevealText(
           promptEl,
-          `C:\\Users\\Guest\\${sectionName}>`,
+          `C:\\Users\\Bibesh\\${sectionName}>`,
           VERY_FAST_TYPE_SPEED,
           resolve
         )
