@@ -275,6 +275,9 @@ hr.section-divider.visible,
     transform var(--animation-speed-fast);
   font-family: "Consolas", "Courier New", Courier, monospace;
 }
+.download-button {
+  text-decoration: underline;
+}
 .button:hover,
 .button:focus {
   background-color: var(--current-accent2);
