@@ -276,7 +276,7 @@ hr.section-divider.visible,
   font-family: "Consolas", "Courier New", Courier, monospace;
 }
 .download-button {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 .button:hover,
 .button:focus {
