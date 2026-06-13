@@ -73,6 +73,16 @@ body.light-theme {
   box-sizing: border-box;
 }
 
+/* Custom Selection Highlighting */
+::selection {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+}
+::-moz-selection {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+}
+
 html {
   scroll-behavior: var(--scroll-behavior);
 }
