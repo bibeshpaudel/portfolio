@@ -6,8 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibesh Paudel - .NET Developer</title>
     <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23282828%22%20rx%3D%222%22%20ry%3D%222%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20fill%3D%22%230D0D0D%22%20rx%3D%221%22%20ry%3D%221%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22monospace%2C%20'Courier%20New'%2C%20Courier%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%20fill%3D%22%233AF241%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3EB%3C%2Ftext%3E%3C%2Fsvg%3E">
+        href="data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23b45309%22%20rx%3D%224%22%20ry%3D%224%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-family%3D%22'Cormorant%20Garamond'%2C%20serif%22%20font-size%3D%2211%22%20font-style%3D%22italic%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3Eb%3C%2Ftext%3E%3C%2Fsvg%3E">
+
+    <!-- Google Fonts: Cormorant Garamond (Luxury Serif) & Inter (Clean Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function () {
@@ -19,70 +29,187 @@
 </head>
 
 <body>
-    <div class="container hidden-initially" id="mainContainer">
-        <header id="pageHeader" class="hidden-initially">
-            <div class="prompt" id="headerPrompt"></div>
-            <nav id="mainNav">
-                <a href="#home" class="nav-item hidden-initially">home</a>
-                <a href="#skills" class="nav-item hidden-initially">skills</a>
-                <a href="#experience" class="nav-item hidden-initially">experience</a>
-                <a href="#education" class="nav-item hidden-initially">education</a>
-                <a href="#projects" class="nav-item hidden-initially">projects</a>
-                <a href="#contact" class="nav-item hidden-initially">contact</a>
-            </nav>
-            <div class="theme-switcher hidden-initially">
-                <label for="themeToggle" class="toggle-label">
-                    <input type="checkbox" id="themeToggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-        </header>
+    <!-- Warm Ambient Background Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-        <main>
-            <section id="home" class="page-section">
-                <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Introduction</h2>
+    <div class="editorial-container" id="mainContainer">
+
+        <!-- Left Column: Fixed Sidebar Panel -->
+        <aside class="sidebar-panel">
+            <div class="sidebar-top">
+                <div class="logo-mark">
+                    bibesh paudel
                 </div>
-                <div class="section-content hidden-initially">
-                    <p class="hidden-initially">Hello, I'm Bibesh Paudel, a passionate .NET Developer, SQL & Cloud
-                        Enthusiast based in Kathmandu, Nepal.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/bibesh-paudel-5a0207225/" target="_blank" title="LinkedIn"
-                            class="hidden-initially">LinkedIn</a>
-                        <a href="https://github.com/bibeshpaudel" target="_blank" title="GitHub"
-                            class="hidden-initially">GitHub</a>
-                        <a href="mailto:bibesh03@gmail.com" title="Email" class="hidden-initially">Email</a>
-                        <a href="assets\Bibesh_Paudel_CV.pdf" download="Bibesh_Paudel_CV.pdf"
-                            class="download-button hidden-initially">Download CV</a>
+                <span class="sidebar-tag">studies in .net, databases & cloud systems.</span>
+            </div>
+
+            <nav id="sidebarNav" class="sidebar-nav">
+                <a href="#home" class="nav-item active">
+                    <span class="nav-num">01</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">intro</span>
+                </a>
+                <a href="#skills" class="nav-item">
+                    <span class="nav-num">02</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">expertise</span>
+                </a>
+                <a href="#experience" class="nav-item">
+                    <span class="nav-num">03</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">trajectory</span>
+                </a>
+                <a href="#education" class="nav-item">
+                    <span class="nav-num">04</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">studies</span>
+                </a>
+                <a href="#projects" class="nav-item">
+                    <span class="nav-num">05</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">creations</span>
+                </a>
+                <a href="#contact" class="nav-item">
+                    <span class="nav-num">06</span>
+                    <span class="nav-line"></span>
+                    <span class="nav-text">connection</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-socials">
+                    <a href="https://www.linkedin.com/in/bibesh-paudel-5a0207225/" target="_blank"
+                        class="social-link">LinkedIn</a>
+                    <span class="separator">/</span>
+                    <a href="https://github.com/bibeshpaudel" target="_blank" class="social-link">GitHub</a>
+                    <span class="separator">/</span>
+                    <a href="mailto:bibesh03@gmail.com" class="social-link">Email</a>
+                </div>
+
+                <button id="themeToggleBtn" class="theme-switcher-btn" aria-label="Toggle Theme">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right Column: Scrollable Content Canvas -->
+        <main class="content-panel">
+
+            <!-- Section 01: Introduction -->
+            <section id="home" class="page-section hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        sculpting clean code, high-performance backends, and cloud-connected systems.
+                    </h1>
+
+                    <div class="hero-body">
+                        <p class="hero-desc">
+                            I am a software engineer based in <strong class="text-highlight">Kathmandu, Nepal</strong>,
+                            specializing in robust <strong class="text-highlight">.NET backend architectures</strong>
+                            and high-throughput <strong class="text-highlight">database layers</strong>.
+                            Currently designing secure integrations and fintech platforms at <strong class="text-highlight">IME Limited</strong>.
+                        </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="assets/Bibesh_Paudel_CV.pdf" download="Bibesh_Paudel_CV.pdf" class="btn-editorial">
+                            <span>Download CV</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </a>
                     </div>
                 </div>
+
+                <!-- Repositioned and Spaced Lower Game Dashboard -->
+                <div class="hero-game-wrapper">
+                    <div class="game-dashboard spotlight-card">
+                        <div class="card-glow"></div>
+                        <div class="game-header">
+                            <span class="game-title">// retro bug squasher v1.0</span>
+                            <span class="game-score-tag">bugs_squashed: <span id="gameScore" class="font-mono">0</span></span>
+                        </div>
+                        <div class="game-content-layout">
+                            <div class="game-canvas-container">
+                                <canvas id="gameCanvas" width="480" height="240"></canvas>
+                                <div class="game-overlay" id="gameOverlay">
+                                    <div class="overlay-msg">press recompile to solve bugs</div>
+                                    <button class="btn-game-action" id="startGameBtn">
+                                        <span>dotnet run --play</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="game-touch-controls">
+                                <button class="touch-btn key-up" id="btnUp" aria-label="Move Up">▲</button>
+                                <div class="touch-row">
+                                    <button class="touch-btn key-left" id="btnLeft" aria-label="Move Left">◀</button>
+                                    <button class="touch-btn key-down" id="btnDown" aria-label="Move Down">▼</button>
+                                    <button class="touch-btn key-right" id="btnRight" aria-label="Move Right">▶</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="canvas-hint">// squash runtime bugs, avoid system crashes</div>
+                </div>
             </section>
 
-            <hr class="section-divider hidden-initially">
-
-            <section id="skills" class="page-section">
+            <!-- Section 02: Technical Expertise -->
+            <section id="skills" class="page-section section-padding">
                 <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Skills</h2>
+                    <span class="section-tag">02 / expertise</span>
+                    <h2 class="section-title">Technical Index</h2>
                 </div>
-                <div class="skills-grid section-content hidden-initially">
-                    <!-- Skills will be populated by script.js into categories -->
+                <div class="skills-editorial-list" id="skillsGrid">
+                    <!-- Dynamic rendering via script.js -->
                 </div>
             </section>
 
-            <hr class="section-divider hidden-initially">
-
-            <section id="experience" class="page-section">
+            <!-- Section 03: Professional Trajectory -->
+            <section id="experience" class="page-section section-padding">
                 <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Work Experience</h2>
+                    <span class="section-tag">03 / trajectory</span>
+                    <h2 class="section-title">Work Experience</h2>
                 </div>
-                <div class="timeline section-content hidden-initially">
-                    <div class="timeline-item hidden-initially">
-                        <h3>.NET Developer</h3>
-                        <p class="company-duration">IME Limited | Apr 2022 - Present</p>
-                        <ul>
+
+                <div class="trajectory-list">
+                    <!-- Role 1 -->
+                    <div class="trajectory-item">
+                        <div class="item-meta">
+                            <span class="item-date">2022 — Present</span>
+                            <span class="item-separator">/</span>
+                            <span class="item-company">IME Limited</span>
+                        </div>
+                        <h3 class="item-title">.NET Developer</h3>
+
+                        <ul class="item-bullets">
                             <li>Collaborated with cross-functional teams to design and implement RESTful APIs for a
                                 large-scale fintech platform.</li>
                             <li>Developed and maintained SOAP-based integrations with third-party services to ensure
@@ -97,10 +224,17 @@
                                 maintain code quality.</li>
                         </ul>
                     </div>
-                    <div class="timeline-item hidden-initially">
-                        <h3>.NET Internship</h3>
-                        <p class="company-duration">Swift Technology Pvt. Ltd. | Dec 2021 - Mar 2022</p>
-                        <ul>
+
+                    <!-- Role 2 -->
+                    <div class="trajectory-item">
+                        <div class="item-meta">
+                            <span class="item-date">2021 — 2022</span>
+                            <span class="item-separator">/</span>
+                            <span class="item-company">Swift Technology Pvt. Ltd.</span>
+                        </div>
+                        <h3 class="item-title">.NET Intern</h3>
+
+                        <ul class="item-bullets">
                             <li>Gained hands-on experience in C#, ASP.NET Web Forms, ASP.NET Core, SQL Server, jQuery,
                                 and front-end development.</li>
                             <li>Built responsive and user-friendly interfaces for web applications.</li>
@@ -113,118 +247,192 @@
                 </div>
             </section>
 
-            <hr class="section-divider hidden-initially">
-
-            <section id="education" class="page-section">
+            <!-- Section 04: Academic Studies -->
+            <section id="education" class="page-section section-padding">
                 <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Education</h2>
+                    <span class="section-tag">04 / studies</span>
+                    <h2 class="section-title">Education</h2>
                 </div>
-                <div class="section-content hidden-initially">
-                    <div class="education-item hidden-initially">
-                        <h3>Bachelor of Engineering in Information Technology (BE IT)</h3>
-                        <p>Nepal College of Information Technology (Pokhara University) | Lalitpur, Nepal | Graduated:
-                            2023</p>
+
+                <div class="trajectory-list">
+                    <!-- School 1 -->
+                    <div class="trajectory-item">
+                        <div class="item-meta">
+                            <span class="item-date">Graduated 2023</span>
+                            <span class="item-separator">/</span>
+                            <span class="item-company">Pokhara University</span>
+                        </div>
+                        <h3 class="item-title">BE in Information Technology</h3>
+                        <h4 class="item-institution">Nepal College of Information Technology (NCIT)</h4>
+                        <p class="item-location">Lalitpur, Nepal</p>
                     </div>
-                    <div class="education-item hidden-initially">
-                        <h3>+2 (Science)</h3>
-                        <p>Vidya Mandir Secondary School (NEB) | Baglung, Nepal | Graduated: 2017</p>
+
+                    <!-- School 2 -->
+                    <div class="trajectory-item">
+                        <div class="item-meta">
+                            <span class="item-date">Graduated 2017</span>
+                            <span class="item-separator">/</span>
+                            <span class="item-company">National Examination Board</span>
+                        </div>
+                        <h3 class="item-title">+2 Science</h3>
+                        <h4 class="item-institution">Vidya Mandir Secondary School</h4>
+                        <p class="item-location">Baglung, Nepal</p>
                     </div>
                 </div>
             </section>
 
-            <hr class="section-divider hidden-initially">
-
-            <section id="projects" class="page-section">
+            <!-- Section 05: Creations -->
+            <section id="projects" class="page-section section-padding">
                 <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Projects</h2>
+                    <span class="section-tag">05 / creations</span>
+                    <h2 class="section-title">Featured Works</h2>
                 </div>
-                <div class="section-content hidden-initially">
-                    <div class="project-subsection">
-                        <h3 class="hidden-initially">Personal Projects</h3>
-                        <div class="project-item hidden-initially">
-                            <h4>Ghumfhir</h4>
-                            <p>Ghumfhir is an AI-driven web app that helps travelers find ideal companions and
-                                personalized destination recommendations. It tailors travel experiences by matching
-                                users based on interests, preferences, and travel styles.</p>
-                            <p class="technologies"><span>Technologies:</span> .NET Core Web API, EF Core, PostgreSQL
-                            </p>
-                            <p><em>Link: To be added soon.</em></p>
+
+                <div class="creations-list">
+                    <h4 class="creations-subheading">Personal Work</h4>
+
+                    <!-- Project 1 -->
+                    <div class="creation-row">
+                        <div class="creation-header">
+                            <h3 class="creation-name">Ghumfhir</h3>
+                            <span class="creation-status">Coming Soon</span>
                         </div>
-                        <div class="project-item hidden-initially">
-                            <h4>Pocket</h4>
-                            <p>Pocket is a web-based utility suite offering tools across categories like graphics, 
-                                code, text, conversions, and testing. It streamlines workflows with features such as 
-                                image compression, code beautifiers, text analyzers, generators, and network utilities—all 
-                                in one unified platform.</p>
-                            <p class="technologies"><span>Technologies:</span> HTML, CSS, JS, Tailwind CSS
-                            </p>
-                            <p><a href="https://bibeshpaudel.github.io/Pocket/#dashboard" target="_blank"
-                                    title="Link To Pocket">[view_details]</a></p>
+                        <p class="creation-desc">
+                            An AI-driven traveler matching portal delivering destination advice based on travel styles,
+                            budgets, and companion preferences.
+                        </p>
+                        <div class="creation-footer">
+                            <span class="creation-tech">.NET Core · EF Core · PostgreSQL</span>
                         </div>
                     </div>
-                    <div class="project-subsection">
-                        <h3 class="hidden-initially">Professional Projects</h3>
-                        <div class="project-item hidden-initially">
-                            <h4>IME India (Enterprise Solution)</h4>
-                            <p>IME India, an RBI-authorized Full Fledged Money Changer (FFMC), provides comprehensive
-                                financial services, including foreign currency exchange, domestic and Indo-Nepal
-                                remittance, and digital payment solutions in India.</p>
-                            <p class="technologies"><span>Technologies:</span> .NET Webforms, .NET Web API, SQL Server,
-                                jQuery</p>
-                            <p><a href="https://imeindia.com/" target="_blank"
-                                    title="Details for IME India">[view_details]</a></p>
+
+                    <!-- Project 2 -->
+                    <div class="creation-row">
+                        <div class="creation-header">
+                            <h3 class="creation-name">Pocket</h3>
+                            <a href="https://bibeshpaudel.github.io/Pocket/#dashboard" target="_blank"
+                                class="creation-link-icon" aria-label="Launch Pocket dashboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
                         </div>
-                        <div class="project-item hidden-initially">
-                            <h4>IME Remit (Enterprise Solution)</h4>
-                            <p>IME Remit, a leading provider of remittance services and financial solutions in Nepal,
-                                operates under the authorization of Nepal Rastra Bank. The company serves a large
-                                network both domestically and internationally, facilitating secure money transfers,
-                                foreign currency exchange, and digital wallet services.</p>
-                            <p class="technologies"><span>Technologies:</span> .NET Webforms, .NET Core Web API, .NET
-                                Core MVC, SQL Server, jQuery</p>
-                            <p><a href="https://imeremit.com.np/" target="_blank"
-                                    title="Details for IME Remit">[view_details]</a></p>
+                        <p class="creation-desc">
+                            A utility web portal offering developers image scaling algorithms, C# code beautifiers,
+                            hashing tools, and markdown converters.
+                        </p>
+                        <div class="creation-footer">
+                            <span class="creation-tech">HTML5 · CSS3 · JS · Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <h4 class="creations-subheading">Enterprise Deployments</h4>
+
+                    <!-- Project 3 -->
+                    <div class="creation-row">
+                        <div class="creation-header">
+                            <h3 class="creation-name">IME India</h3>
+                            <a href="https://imeindia.com/" target="_blank" class="creation-link-icon"
+                                aria-label="Launch IME India portal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+                        <p class="creation-desc">
+                            Authorized FFMC foreign exchange remittance portal connecting multi-tenant gateways across
+                            India under RBI validation rules.
+                        </p>
+                        <div class="creation-footer">
+                            <span class="creation-tech">.NET Webforms · .NET Web API · SQL Server · jQuery</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="creation-row">
+                        <div class="creation-header">
+                            <h3 class="creation-name">IME Remit</h3>
+                            <a href="https://imeremit.com.np/" target="_blank" class="creation-link-icon"
+                                aria-label="Launch IME Remit platform">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+                        <p class="creation-desc">
+                            Core remittance engine supporting cross-border transaction APIs, partner integrations,
+                            settlement jobs, and digital currency pools.
+                        </p>
+                        <div class="creation-footer">
+                            <span class="creation-tech">.NET Webforms · .NET Core Web API · .NET Core MVC · SQL
+                                Server</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <hr class="section-divider hidden-initially">
-
-            <section id="contact" class="page-section">
+            <!-- Section 06: Contact Editorial Letter Form -->
+            <section id="contact" class="page-section section-padding">
                 <div class="section-header">
-                    <div class="prompt section-prompt hidden-initially"></div>
-                    <h2 class="section-title hidden-initially">Contact Me</h2>
+                    <span class="section-tag">06 / connection</span>
+                    <h2 class="section-title">Start a Conversation</h2>
                 </div>
-                <form id="contactForm" class="section-content hidden-initially">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name">
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email">
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="5"></textarea>
-                        <div class="error-message"></div>
-                    </div>
-                    <button type="submit" class="button contactForm-submit">send_message</button>
-                </form>
-                <p id="formStatus" class="hidden-initially"></p>
+
+                <div class="contact-editorial-container">
+                    <form id="contactForm" class="editorial-letter-form" novalidate>
+                        <p class="editorial-letter-text">
+                            Hello Bibesh,
+                            <br><br>
+                            My name is
+                            <span class="inline-input-wrapper">
+                                <textarea id="name" name="name" required placeholder="your name" rows="1"></textarea>
+                            </span>,
+                            and I am writing to collaborate on
+                            <span class="inline-input-wrapper block-textarea-wrapper">
+                                <textarea id="message" name="message" required placeholder="a project, database engineering..." rows="1"></textarea>
+                            </span>.
+                            You can reach back to me at
+                            <span class="inline-input-wrapper">
+                                <textarea id="email" name="email" required placeholder="your email address" rows="1"></textarea>
+                            </span>.
+                        </p>
+
+                        <div class="editorial-form-actions">
+                            <button type="submit" class="btn-editorial-submit contactForm-submit">
+                                <span>Send Letter</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                            <p id="formStatus"></p>
+                        </div>
+                    </form>
+                </div>
             </section>
+
+            <!-- Small mobile footer -->
+            <footer class="mobile-footer">
+                <p class="copyright">&copy; <span id="currentYear"></span> Bibesh Paudel. All rights reserved.</p>
+            </footer>
+
         </main>
-
-        <footer id="pageFooter" class="hidden-initially">
-            <div class="prompt">C:\Users\Bibesh></div>
-            <p>© <span id="currentYear"></span> Bibesh Paudel. All rights reserved. _</p>
-        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 
