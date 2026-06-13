@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggleBtn = document.getElementById("themeToggleBtn");
   const currentYearSpan = document.getElementById("currentYear");
   const scrollProgress = document.getElementById("scrollProgress");
-  
+
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("formStatus");
   const sections = document.querySelectorAll(".page-section");
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Theme Switching ---
-  const savedTheme = localStorage.getItem("theme") || "dark-theme";
+  const savedTheme = localStorage.getItem("theme") || "light-theme";
   document.body.className = savedTheme;
 
   themeToggleBtn.addEventListener("click", () => {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("section-visible");
-        
+
         // Update Active Nav Link
         const id = entry.target.getAttribute("id");
         navItems.forEach((item) => {
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderSkills() {
     const skillsGridEl = document.getElementById("skillsGrid");
     if (!skillsGridEl) return;
-    
+
     skillsGridEl.innerHTML = "";
 
     skillsData.forEach((categoryObj) => {
@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isValid) {
         const submitButton = contactForm.querySelector(".contactForm-submit");
         const originalBtnText = submitButton.innerHTML;
-        
+
         submitButton.disabled = true;
         submitButton.innerHTML = `
           <svg class="fa-spinner" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scoreVal = document.getElementById("gameScore");
     const overlay = document.getElementById("gameOverlay");
     const startBtn = document.getElementById("startGameBtn");
-    
+
     // Touch Buttons
     const btnUp = document.getElementById("btnUp");
     const btnDown = document.getElementById("btnDown");
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bug.x = Math.floor(Math.random() * gridSizeX);
         bug.y = Math.floor(Math.random() * gridSizeY);
         valid = true;
-        
+
         // Ensure bug doesn't spawn inside snake body
         for (let segment of snake) {
           if (segment.x === bug.x && segment.y === bug.y) {
@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") changeDirection(0, 1);
       if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") changeDirection(-1, 0);
       if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") changeDirection(1, 0);
-      
+
       // Prevent scroll on arrows
       if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
         e.preventDefault();
@@ -438,10 +438,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       draw();
-      
-      // Game speedup over time
-      const baseInterval = 130;
-      const speedUp = Math.min(score * 4, 50);
+
+      // Game speedup over time (slower base rate)
+      const baseInterval = 160;
+      const speedUp = Math.min(score * 3, 60);
       gameLoopTimeout = setTimeout(tick, baseInterval - speedUp);
     }
 
@@ -450,31 +450,31 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimeout(gameLoopTimeout);
       overlay.style.opacity = "1";
       overlay.style.visibility = "visible";
-      
+
       const msgEl = overlay.querySelector(".overlay-msg");
       if (hitWall) {
         msgEl.textContent = `seg fault: stack overflow at score ${score}`;
       } else {
         msgEl.textContent = `null pointer reference: bit self at score ${score}`;
       }
-      
+
       const btnSpan = startBtn.querySelector("span");
       btnSpan.textContent = "dotnet watch run --rebuild";
     }
 
     function draw() {
-      const rootStyles = getComputedStyle(document.documentElement);
+      const rootStyles = getComputedStyle(document.body);
       const bg = rootStyles.getPropertyValue("--bg-color").trim();
       const primaryColor = rootStyles.getPropertyValue("--primary-color").trim();
       const accentColor = rootStyles.getPropertyValue("--accent-color").trim();
-      const borderThemeColor = rootStyles.getPropertyValue("--border-color").trim();
+      const gridColor = rootStyles.getPropertyValue("--game-grid-color").trim() || "rgba(242, 237, 228, 0.12)";
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw faint grid backing
-      ctx.strokeStyle = borderThemeColor;
+      ctx.strokeStyle = gridColor;
       ctx.lineWidth = 0.5;
-      
+
       for (let i = 0; i < gridSizeX; i++) {
         ctx.beginPath();
         ctx.moveTo(i * blockPixelSize, 0);
@@ -492,11 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.fillStyle = accentColor;
       const bx = bug.x * blockPixelSize + blockPixelSize / 2;
       const by = bug.y * blockPixelSize + blockPixelSize / 2;
-      
+
       ctx.beginPath();
       ctx.arc(bx, by, 7, 0, Math.PI * 2);
       ctx.fill();
-      
+
       ctx.strokeStyle = bg;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
@@ -510,7 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillStyle = primaryColor;
         const sx = segment.x * blockPixelSize;
         const sy = segment.y * blockPixelSize;
-        
+
         ctx.beginPath();
         ctx.roundRect(sx + 1, sy + 1, blockPixelSize - 2, blockPixelSize - 2, 4);
         ctx.fill();
@@ -541,6 +541,13 @@ document.addEventListener("DOMContentLoaded", () => {
       resetGame();
       isRunning = true;
       tick();
+    });
+
+    // Redraw grid when theme changes to update grid colors dynamically
+    themeToggleBtn.addEventListener("click", () => {
+      requestAnimationFrame(() => {
+        draw();
+      });
     });
 
     // Initial render at rest

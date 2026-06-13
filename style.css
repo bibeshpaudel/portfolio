@@ -40,6 +40,7 @@
   --transition-slow: 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 
   --scroll-behavior: smooth;
+  --game-grid-color: rgba(242, 237, 228, 0.45);
 }
 
 body.light-theme {
@@ -62,6 +63,7 @@ body.light-theme {
   --glass-border: rgba(33, 28, 24, 0.06);
   --card-bg: rgba(236, 230, 220, 0.5);
   --glow-opacity: 0.03;
+  --game-grid-color: rgba(33, 28, 24, 0.24);
 }
 
 /* --- Base & Scroll Rules --- */
