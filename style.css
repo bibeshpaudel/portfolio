@@ -1157,21 +1157,56 @@ body.light-theme .game-overlay {
   font-style: italic;
   cursor: pointer;
   padding-bottom: 4px;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  position: relative;
+  /* overflow: hidden removed — plane fly-out animation must not be clipped */
 }
 
-.btn-editorial-submit svg {
-  transition: transform var(--transition-normal);
+/* Paper plane icon wrapper */
+.btn-plane-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
   color: var(--primary-color);
 }
 
-.btn-editorial-submit:hover {
+/* Both plane SVGs stack on top of each other */
+.plane-outline,
+.plane-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Default state: outlined visible, filled hidden */
+.plane-outline {
+  opacity: 1;
+  transform: scale(1);
+}
+.plane-filled {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+/* Hover state: filled pops in, outlined fades */
+.btn-editorial-submit:not(:disabled):hover .plane-outline {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.btn-editorial-submit:not(:disabled):hover .plane-filled {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hover — text + border color shift */
+.btn-editorial-submit:not(:disabled):hover {
   color: var(--primary-color);
   border-color: var(--fg-color);
-}
-
-.btn-editorial-submit:hover svg {
-  transform: translateX(5px);
 }
 
 .btn-editorial-submit:disabled {
@@ -1179,6 +1214,115 @@ body.light-theme .game-overlay {
   cursor: not-allowed;
 }
 
+/* ============================================================
+   SENDING state — plane launches up-right and disappears
+   ============================================================ */
+.btn-editorial-submit.state-sending .btn-letter-text {
+  opacity: 0.55;
+}
+
+.btn-editorial-submit.state-sending .btn-plane-wrap {
+  will-change: transform, opacity;
+}
+
+/* Show only outlined during launch */
+.btn-editorial-submit.state-sending .plane-outline { opacity: 1; transform: none; }
+.btn-editorial-submit.state-sending .plane-filled  { opacity: 0; }
+
+/*
+  Smooth clockwise swirl then fade.
+  Each stop plots a point on a ~55px-radius circle so the path is
+  genuinely curved. Rotation tracks the tangent — the plane always
+  faces its direction of travel. Opacity stays 1 through the full
+  loop (0–70%), then fades gracefully as it escapes upward.
+  `linear` easing = no cubic-bezier acceleration spikes between stops.
+*/
+@keyframes planeLaunch {
+  /* lift-off, tilting nose up-right */
+  0%   { transform: translate(  0px,   0px) rotate( -12deg); opacity: 1; }
+  /* climbing toward top of arc */
+  12%  { transform: translate( 18px, -36px) rotate( -45deg); opacity: 1; }
+  /* peak — now heading rightward */
+  24%  { transform: translate( 52px, -42px) rotate(   2deg); opacity: 1; }
+  /* descending on the right side */
+  36%  { transform: translate( 70px,  -8px) rotate(  52deg); opacity: 1; }
+  /* bottom of loop — heading leftward */
+  48%  { transform: translate( 48px,  22px) rotate( 112deg); opacity: 1; }
+  /* left side — heading upward */
+  60%  { transform: translate( 10px,  12px) rotate( 168deg); opacity: 1; }
+  /* loop completed, back near start */
+  70%  { transform: translate( -2px, -20px) rotate( 212deg); opacity: 1; }
+  /* break-out: plane escapes upward — begin fade */
+  80%  { transform: translate( 18px, -56px) rotate( 240deg); opacity: 0.75; }
+  90%  { transform: translate( 46px, -90px) rotate( 252deg); opacity: 0.35; }
+  100% { transform: translate( 76px,-125px) rotate( 260deg); opacity: 0; }
+}
+
+/* Trail dots in sync with 2s launch */
+.btn-editorial-submit.state-sending::after {
+  content: "· · ·";
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: var(--primary-color);
+  opacity: 0;
+  animation: trailFade 2s 0.1s linear forwards;
+  pointer-events: none;
+}
+@keyframes trailFade {
+  0%   { opacity: 0;   transform: translateX( 0px); }
+  12%  { opacity: 0.9; transform: translateX( 4px); }
+  55%  { opacity: 0.7; transform: translateX(12px); }
+  80%  { opacity: 0.3; transform: translateX(20px); }
+  100% { opacity: 0;   transform: translateX(30px); }
+}
+
+/* ============================================================
+   SUCCESS state — checkmark with a pop-in burst
+   ============================================================ */
+.btn-editorial-submit.state-success {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ============================================================
+   FAIL state — plane shakes, spins, crashes (red)
+   ============================================================ */
+.btn-editorial-submit.state-fail {
+  color: #ef4444;
+  border-color: #ef4444;
+  animation: failShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.btn-editorial-submit.state-fail .btn-plane-wrap {
+  animation: planeCrash 0.7s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  color: #ef4444;
+}
+
+.btn-editorial-submit.state-fail .plane-outline { opacity: 1; }
+.btn-editorial-submit.state-fail .plane-filled  { opacity: 0; }
+
+@keyframes planeCrash {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1);  opacity: 1; }
+  20%  { transform: translate(6px, -5px) rotate(-30deg) scale(1.1); }
+  40%  { transform: translate(2px, 2px) rotate(40deg) scale(0.95); }
+  60%  { transform: translate(-3px, 6px) rotate(100deg) scale(0.8); opacity: 0.8; }
+  80%  { transform: translate(0, 10px) rotate(160deg) scale(0.5);  opacity: 0.4; }
+  100% { transform: translate(0, 14px) rotate(200deg) scale(0.2);  opacity: 0; }
+}
+
+@keyframes failShake {
+  10%, 90%  { transform: translateX(-1.5px); }
+  20%, 80%  { transform: translateX(3px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+/* Spinning loader (sending fallback icon) */
 .fa-spinner {
   animation: rotateSpinner 1.2s linear infinite;
 }
@@ -1186,6 +1330,20 @@ body.light-theme .game-overlay {
 @keyframes rotateSpinner {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Success pop-in keyframe for inline SVG */
+@keyframes successPop {
+  0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+  60%  { opacity: 1; transform: scale(1.2) rotate(5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Fail icon pop-in keyframe for inline SVG */
+@keyframes failIconPop {
+  0%   { opacity: 0; transform: scale(0.3) rotate(30deg); }
+  60%  { opacity: 1; transform: scale(1.25) rotate(-5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
 /* Static desktop hidden footer */
@@ -1351,4 +1509,17 @@ body.light-theme .mobile-nav-dock {
     align-items: flex-start;
     gap: 12px;
   }
+}
+
+/* ============================================================
+   Flying Paper Plane Clone Animation (Auto-triggered on Send)
+   ============================================================ */
+.flying-paper-plane-clone {
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.28))
+          drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+}
+
+.flying-paper-plane-clone,
+.flying-paper-plane-clone * {
+  transition: none !important;
 }

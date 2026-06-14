@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gameDashboard) {
           const r = gameDashboard.getBoundingClientRect();
           if (e.clientX >= r.left && e.clientX <= r.right &&
-              e.clientY >= r.top  && e.clientY <= r.bottom) {
+            e.clientY >= r.top && e.clientY <= r.bottom) {
             spotlight.style.opacity = "0";
             rafPending = false;
             return;
@@ -264,6 +264,78 @@ document.addEventListener("DOMContentLoaded", () => {
       window.addEventListener("resize", () => adjustSize(el));
     });
 
+    function triggerPaperPlaneAnimation(planeWrapEl) {
+      if (!planeWrapEl) return;
+
+      const rect = planeWrapEl.getBoundingClientRect();
+      const clone = planeWrapEl.cloneNode(true);
+      clone.classList.add("flying-paper-plane-clone");
+
+      // Style the clone to sit exactly where the original icon was, fixed to viewport
+      Object.assign(clone.style, {
+        position: "fixed",
+        left: `${rect.left}px`,
+        top: `${rect.top}px`,
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+        margin: "0",
+        padding: "0",
+        zIndex: "100000",
+        pointerEvents: "none",
+        transformOrigin: "center center"
+      });
+
+      // Force only outline SVG to show in the clone
+      const outlineSVG = clone.querySelector(".plane-outline");
+      const filledSVG = clone.querySelector(".plane-filled");
+      if (outlineSVG) {
+        outlineSVG.style.opacity = "1";
+        outlineSVG.style.transform = "none";
+      }
+      if (filledSVG) {
+        filledSVG.style.opacity = "0";
+      }
+
+      document.body.appendChild(clone);
+
+      // Hide original button icon
+      planeWrapEl.style.opacity = "0";
+
+      // Calculate path relative to the clone's starting position (which is at `rect.left`)
+      // It swoops rightward and upward in a beautiful, natural wind-glide wave path.
+      const widthFactor = Math.min(window.innerWidth / 1200, 1.25);
+      const flightPath = {
+        curviness: 1.25,
+        autoRotate: [["x", "y", "rotation", 45, false]], // 45deg offset (with useRadians=false) aligns the SVG's custom nose angle to the path tangent
+        values: [
+          { x: 150 * widthFactor, y: -90 },
+          { x: 350 * widthFactor, y: -140 },
+          { x: 550 * widthFactor, y: -60 },
+          { x: 750 * widthFactor, y: -180 },
+          { x: 950 * widthFactor, y: -220 },
+          { x: window.innerWidth - rect.left + 150, y: -340 }
+        ]
+      };
+
+      // Reset transforms on the clone for a clean run
+      TweenLite.set(clone, { x: 0, y: 0, rotation: 0, opacity: 1, scale: 1 });
+
+      const tl = new TimelineLite({
+        onComplete: () => {
+          clone.remove();
+        }
+      });
+
+      // Fly along the curved bezier path
+      tl.to(clone, 2.8, {
+        bezier: flightPath,
+        ease: Power2.easeInOut // Slightly stronger easing curves for a lighter, glider-like feel
+      }, 0);
+
+      // Fade out as it exits off-screen right
+      tl.to(clone, 0.8, { opacity: 0, ease: Power1.easeOut }, "-=0.8");
+    }
+
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
       formStatus.textContent = "";
@@ -310,54 +382,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isValid) {
         const submitButton = contactForm.querySelector(".contactForm-submit");
-        const originalBtnText = submitButton.innerHTML;
+        const letterTextEl = submitButton.querySelector(".btn-letter-text");
+        const planeWrapEl = submitButton.querySelector(".btn-plane-wrap");
 
+        // ── SENDING state ──────────────────────────────────────────────
         submitButton.disabled = true;
-        submitButton.innerHTML = `
-          <svg class="fa-spinner" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
-          <span>Sending...</span>
-        `;
+        submitButton.classList.add("state-sending");
+        letterTextEl.textContent = "Sending...";
+
+        // Trigger the beautiful full-screen paper plane flight animation
+        triggerPaperPlaneAnimation(planeWrapEl);
 
         emailjs
           .sendForm("service_yl2hki7", "template_e2f9xvk", contactForm)
           .then(() => {
-            submitButton.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Letter Sent!</span>
+            // ── SUCCESS state ─────────────────────────────────────────
+            submitButton.classList.remove("state-sending");
+            submitButton.classList.add("state-success");
+            letterTextEl.textContent = "Letter Sent!";
+            planeWrapEl.style.opacity = ""; // Restore visibility
+
+            // Swap plane icons to show filled checkmark feel — use a checkmark SVG
+            planeWrapEl.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                style="opacity:1; animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
             `;
-            submitButton.style.color = "var(--primary-color)";
 
             formStatus.textContent = "Letter dispatched successfully!";
             formStatus.style.color = "var(--primary-color)";
 
             setTimeout(() => {
               contactForm.reset();
-              // Re-apply original placeholders and reset sizes post-reset
               [nameEl, emailEl, messageEl].forEach(el => {
                 el.placeholder = originalPlaceholders[el.id];
                 adjustSize(el);
               });
-              submitButton.innerHTML = originalBtnText;
-              submitButton.style.color = "";
+              // Restore button
+              submitButton.classList.remove("state-success");
               submitButton.disabled = false;
+              letterTextEl.textContent = "Send Letter";
+              planeWrapEl.innerHTML = `
+                <svg class="plane-outline" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2L11 13"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+                <svg class="plane-filled" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+              `;
               formStatus.textContent = "";
             }, 3000);
           })
           .catch((error) => {
             console.error("EmailJS Error:", error);
-            submitButton.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              <span>Failed to Dispatch</span>
-            `;
-            submitButton.style.color = "#ef4444";
+
+            // ── FAIL state ────────────────────────────────────────────
+            submitButton.classList.remove("state-sending");
+            submitButton.classList.add("state-fail");
+            letterTextEl.textContent = "Failed to Dispatch";
+            planeWrapEl.style.opacity = ""; // Restore visibility
 
             formStatus.textContent = "Failed to deliver letter. Try again.";
             formStatus.style.color = "#ef4444";
 
+            // After crash animation settles, show an X icon
             setTimeout(() => {
-              submitButton.innerHTML = originalBtnText;
-              submitButton.style.color = "";
+              planeWrapEl.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  style="opacity:1; animation: failIconPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; color:#ef4444;">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              `;
+            }, 500);
+
+            setTimeout(() => {
+              submitButton.classList.remove("state-fail");
               submitButton.disabled = false;
+              letterTextEl.textContent = "Send Letter";
+              planeWrapEl.innerHTML = `
+                <svg class="plane-outline" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2L11 13"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+                <svg class="plane-filled" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+              `;
               formStatus.textContent = "";
             }, 3500);
           });
