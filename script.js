@@ -85,6 +85,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // --- Logo click to Top ---
+  const logoMark = document.querySelector(".logo-mark");
+  if (logoMark) {
+    logoMark.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
   // --- Scroll Progress Indicator & Active Nav Tracker ---
   function updateScrollSpy() {
     // 1. Scroll Progress Indicator

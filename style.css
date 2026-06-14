@@ -9,6 +9,7 @@
 
 /* --- Dynamic Theme Variables (Warm Earth Palette) --- */
 :root {
+  --animation-count: 9;
   /* Dark Theme (Default) */
   --bg-color: #12100e;       /* Deep Warm Espresso Black */
   --fg-color: #f2ede4;       /* Soft Linen Cream */
@@ -247,7 +248,37 @@ body::after {
   color: var(--fg-color);
   line-height: 1;
   text-transform: lowercase;
-  cursor: default;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Waving Hand Emoji Animation --- */
+.logo-mark .wave {
+  font-size: 1.9rem;
+  display: inline-block;
+  transform: scale(0) translate3d(0px, 0px, 0.1px);
+  transform-origin: 70% 80%;
+  user-select: none;
+  opacity: 0;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.logo-mark:hover .wave {
+  opacity: 1;
+  transform: scale(1) translate3d(0px, 0px, 0.1px);
+  animation: wave-animation 0.5s var(--animation-count, 9) ease-in-out;
+  animation-play-state: running;
+}
+
+@keyframes wave-animation {
+  0%, 100% {
+    transform: rotate(0deg) translate3d(0px, 0px, 0.1px);
+  }
+  50% {
+    transform: rotate(30deg) translate3d(0px, 0px, 0.1px);
+  }
 }
 
 .sidebar-tag {
@@ -519,6 +550,39 @@ body.light-theme .pulse-dot {
   color: var(--fg-color);
   border-bottom: 1px dashed var(--primary-color);
   padding-bottom: 1px;
+  position: relative;
+  transition: border-color var(--transition-fast);
+}
+
+.text-highlight::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1.5px;
+  width: 100%;
+  height: 4px;
+  background-color: var(--primary-color);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath d='M0,2 Q5,0 10,2 T20,2' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath d='M0,2 Q5,0 10,2 T20,2' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-size: 20px 4px;
+  mask-size: 20px 4px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+
+.text-highlight:hover {
+  border-color: transparent;
+}
+
+.text-highlight:hover::after {
+  opacity: 1;
+  transform: scaleY(1);
+  animation: underlineWaveMove 0.75s linear infinite;
 }
 
 .hero-game-wrapper {
@@ -717,14 +781,13 @@ body.light-theme .game-overlay {
   font-size: 1.15rem;
   font-style: italic;
   text-decoration: none;
-  border-bottom: 1.5px solid var(--primary-color);
   padding-bottom: 3px;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast);
+  position: relative;
 }
 
 .cv-download-link:hover {
   color: var(--primary-color);
-  border-color: var(--fg-color);
 }
 
 .cv-link-text {
@@ -1150,14 +1213,13 @@ body.light-theme .game-overlay {
   gap: 10px;
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid var(--primary-color);
   color: var(--fg-color);
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-style: italic;
   cursor: pointer;
   padding-bottom: 4px;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast);
   position: relative;
   /* overflow: hidden removed — plane fly-out animation must not be clipped */
 }
@@ -1206,7 +1268,6 @@ body.light-theme .game-overlay {
 /* Hover — text + border color shift */
 .btn-editorial-submit:not(:disabled):hover {
   color: var(--primary-color);
-  border-color: var(--fg-color);
 }
 
 .btn-editorial-submit:disabled {
@@ -1522,4 +1583,48 @@ body.light-theme .mobile-nav-dock {
 .flying-paper-plane-clone,
 .flying-paper-plane-clone * {
   transition: none !important;
+}
+
+/* ============================================================
+   Wavy Underline Animations for CV Link & Submit Buttons
+   ============================================================ */
+.cv-download-link::after,
+.btn-editorial-submit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--primary-color);
+  transition: height 0.15s ease, background-color var(--transition-fast);
+}
+
+.cv-download-link:hover::after,
+.btn-editorial-submit:not(:disabled):hover::after {
+  height: 4.5px;
+  background-color: var(--primary-color);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath d='M0,2 Q5,0 10,2 T20,2' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4'%3E%3Cpath d='M0,2 Q5,0 10,2 T20,2' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-size: 20px 4px;
+  mask-size: 20px 4px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  animation: underlineWaveMove 0.75s linear infinite;
+}
+
+/* Disabled button state overrides */
+.btn-editorial-submit:disabled::after {
+  display: none;
+}
+
+@keyframes underlineWaveMove {
+  from {
+    mask-position: 0 0;
+    -webkit-mask-position: 0 0;
+  }
+  to {
+    mask-position: 20px 0;
+    -webkit-mask-position: 20px 0;
+  }
 }
