@@ -578,6 +578,27 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
+  // --- Download CV Click Animation ---
+  // Native <a download="..."> handles the file download.
+  // JS only drives the icon swap animation (arrow → checkmark → reset).
+  const downloadBtn = document.getElementById("downloadCvBtn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => {
+      // Guard: don't re-trigger mid-animation
+      if (downloadBtn.classList.contains("done")) return;
+
+      // Show checkmark after a short moment (simulating save start)
+      setTimeout(() => {
+        downloadBtn.classList.add("done");
+      }, 600);
+
+      // Reset back to arrow after a pause
+      setTimeout(() => {
+        downloadBtn.classList.remove("done");
+      }, 3000);
+    });
+  }
+
   // --- Initial Render ---
   renderSkills();
   initSnakeGame();

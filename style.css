@@ -631,34 +631,113 @@ body.light-theme .game-overlay {
 
 .hero-actions {
   display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.btn-editorial {
+/* === Editorial Download Link (matches reference image) === */
+.cv-download-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: var(--fg-color);
   font-family: var(--font-serif);
   font-size: 1.15rem;
   font-style: italic;
   text-decoration: none;
   border-bottom: 1.5px solid var(--primary-color);
-  padding-bottom: 4px;
-  transition: all var(--transition-fast);
+  padding-bottom: 3px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.btn-editorial svg {
-  transition: transform var(--transition-fast);
-  color: var(--primary-color);
-}
-
-.btn-editorial:hover {
+.cv-download-link:hover {
   color: var(--primary-color);
   border-color: var(--fg-color);
 }
 
-.btn-editorial:hover svg {
-  transform: translateY(2px);
+.cv-link-text {
+  letter-spacing: -0.01em;
+}
+
+/* Icon swap wrapper */
+.cv-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  color: var(--primary-color);
+}
+
+.cv-icon-wrap .icon-arrow,
+.cv-icon-wrap .icon-check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Default: arrow visible, check hidden */
+.cv-icon-wrap .icon-arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cv-icon-wrap .icon-check {
+  opacity: 0;
+  transform: translateY(5px) scale(0.5);
+}
+
+/* Hover: arrow bounces down */
+.cv-download-link:hover .icon-arrow {
+  animation: dlArrowBounce 0.5s ease forwards;
+}
+@keyframes dlArrowBounce {
+  0%   { transform: translateY(0); }
+  35%  { transform: translateY(5px); }
+  60%  { transform: translateY(2px); }
+  80%  { transform: translateY(4px); }
+  100% { transform: translateY(3px); }
+}
+
+/* Done state: checkmark pops in */
+.cv-download-link.done .icon-arrow {
+  opacity: 0;
+  transform: translateY(8px) scale(0.4);
+}
+.cv-download-link.done .icon-check {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Click press */
+.cv-download-link:active {
+  opacity: 0.7;
+}
+
+/* === View in new tab — small muted icon === */
+.cv-view-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted-color);
+  opacity: 0.55;
+  text-decoration: none;
+  transition: color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+  padding-bottom: 3px;
+}
+
+.cv-view-link:hover {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+.cv-view-link:hover svg {
+  transform: translate(1.5px, -1.5px);
+  transition: transform var(--transition-fast);
+}
+
+.cv-view-link:active {
+  opacity: 0.5;
 }
 
 /* --- Section 02: Expertise Typographic Lists --- */
