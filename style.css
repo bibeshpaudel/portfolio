@@ -329,8 +329,14 @@ body.light-theme .moon-icon {
   scroll-margin-top: 80px;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity var(--transition-slow) ease-out, transform var(--transition-slow) ease-out;
+  transition: opacity var(--transition-fast) ease-out, transform var(--transition-fast) ease-out;
   border-bottom: 1px solid var(--border-color);
+}
+
+.page-section.hero-section {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
 }
 
 .page-section:last-of-type {
@@ -1036,8 +1042,84 @@ body.light-theme .game-overlay {
   display: none;
 }
 
+/* --- Floating Mobile Navigation Dock --- */
+.mobile-nav-dock {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Hidden on desktop */
+  align-items: center;
+  gap: 6px;
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 6px 10px;
+  border-radius: 40px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 999;
+}
+
+body.light-theme .mobile-nav-dock {
+  box-shadow: 0 10px 30px -10px rgba(33, 28, 24, 0.15);
+}
+
+.dock-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 20px;
+  color: var(--muted-color);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.dock-icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  display: block;
+}
+
+.dock-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width var(--transition-fast) ease-out, opacity var(--transition-fast) ease-out, margin-left var(--transition-fast) ease-out;
+  margin-left: 0;
+}
+
+.dock-item.active {
+  color: var(--primary-color);
+  background-color: rgba(var(--primary-rgb), 0.08);
+}
+
+.dock-item.active .dock-label {
+  max-width: 100px;
+  opacity: 1;
+  margin-left: 6px;
+}
+
+.dock-item:hover {
+  color: var(--fg-color);
+  background-color: rgba(var(--primary-rgb), 0.04);
+}
+
 /* --- Media Queries for Asymmetrical Editorial splits --- */
 @media (max-width: 900px) {
+  .mobile-nav-dock {
+    display: flex;
+  }
+
   .editorial-container {
     grid-template-columns: 1fr;
     gap: 0;
@@ -1052,15 +1134,7 @@ body.light-theme .game-overlay {
   }
 
   .sidebar-nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px 20px;
-    margin: 28px 0;
-  }
-
-  .sidebar-nav a {
-    font-size: 0.78rem;
+    display: none;
   }
 
   .nav-line {
@@ -1104,10 +1178,7 @@ body.light-theme .game-overlay {
   .hero-title {
     font-size: 2.15rem;
   }
-  
-  .sidebar-nav {
-    gap: 8px 12px;
-  }
+
   
   .logo-mark {
     font-size: 1.85rem;

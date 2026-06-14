@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mainContainer = document.getElementById("mainContainer");
   const sidebarNav = document.getElementById("sidebarNav");
-  const navItems = document.querySelectorAll(".sidebar-nav .nav-item");
+  const navItems = document.querySelectorAll(".sidebar-nav .nav-item, .mobile-nav-dock .dock-item");
   const themeToggleBtn = document.getElementById("themeToggleBtn");
   const currentYearSpan = document.getElementById("currentYear");
   const scrollProgress = document.getElementById("scrollProgress");
@@ -34,47 +34,70 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
       const targetId = this.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
-      if (targetSection) {
-        const headerHeight = window.innerWidth > 900 ? 80 : 120; // responsive offsets
-        const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight;
+      if (targetId === "#home") {
         window.scrollTo({
-          top: targetPosition,
+          top: 0,
           behavior: "smooth"
         });
+      } else {
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          const headerHeight = window.innerWidth > 900 ? 80 : 120; // responsive offsets
+          const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth"
+          });
+        }
       }
     });
   });
 
-  // --- Scroll Progress Indicator ---
-  window.addEventListener("scroll", () => {
+  // --- Scroll Progress Indicator & Active Nav Tracker ---
+  function updateScrollSpy() {
+    // 1. Scroll Progress Indicator
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     if (scrollHeight > 0) {
       const percentage = (window.scrollY / scrollHeight) * 100;
       scrollProgress.style.width = `${percentage}%`;
     }
-  });
 
-  // --- Section Intersection Reveal & Sidebar ScrollSpy ---
+    // 2. Active Section Highlight based on real-time screen position
+    const headerOffset = window.innerWidth > 900 ? 80 : 120;
+    let activeSection = null;
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom > headerOffset) {
+        activeSection = section;
+      }
+    });
+
+    if (activeSection) {
+      const id = activeSection.getAttribute("id");
+      navItems.forEach((nav) => nav.classList.remove("active"));
+      navItems.forEach((item) => {
+        if (item.getAttribute("href") === `#${id}`) {
+          item.classList.add("active");
+        }
+      });
+    }
+  }
+
+  window.addEventListener("scroll", updateScrollSpy);
+  // Initial run on load to set correct indicators
+  updateScrollSpy();
+
+  // --- Section Intersection Reveal ---
   const sectionOptions = {
     root: null,
-    threshold: 0.15,
-    rootMargin: "-20% 0px -40% 0px"
+    threshold: 0.1,
+    rootMargin: "-10% 0px -15% 0px"
   };
 
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("section-visible");
-
-        // Update Active Nav Link
-        const id = entry.target.getAttribute("id");
-        navItems.forEach((item) => {
-          if (item.getAttribute("href") === `#${id}`) {
-            navItems.forEach((nav) => nav.classList.remove("active"));
-            item.classList.add("active");
-          }
-        });
       }
     });
   }, sectionOptions);
