@@ -145,6 +145,76 @@ body {
   transition: width 0.1s linear;
 }
 
+/* =============================================
+   Texture: Film Grain + Drifting Grid
+   Fixed overlays, pointer-events: none.
+   Remove flatness without being visible.
+   ============================================= */
+
+/* 1. Film grain noise (~3% opacity, SVG feTurbulence) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* 2. Very slow drifting grid (~2.5% opacity, 1px/s drift) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -2px;
+  z-index: 9996;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image:
+    linear-gradient(to right, var(--fg-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--fg-color) 1px, transparent 1px);
+  background-size: 56px 56px;
+  animation: gridDrift 56s linear infinite;
+}
+
+/* Moves exactly 1 tile (56px) over 56s = 1px/s, loops seamlessly */
+@keyframes gridDrift {
+  from { background-position: 0 0; }
+  to   { background-position: 56px 56px; }
+}
+
+/* === Mouse-following grid spotlight === */
+#gridSpotlight {
+  position: fixed;
+  inset: -2px; /* match the drifting grid bleed */
+  z-index: 9995;
+  pointer-events: none;
+  opacity: 0;
+  /* Amber primary-color grid lines */
+  background-image:
+    linear-gradient(to right, var(--primary-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--primary-color) 1px, transparent 1px);
+  background-size: 56px 56px;
+  /* Drift in sync with body::after */
+  animation: gridDrift 56s linear infinite;
+  /* Radial mask: only visible in ~240px radius around cursor */
+  -webkit-mask-image: radial-gradient(
+    circle 240px at var(--mx, -500px) var(--my, -500px),
+    black 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 240px at var(--mx, -500px) var(--my, -500px),
+    black 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    transparent 100%
+  );
+  transition: opacity 0.5s ease;
+}
+
 /* --- Split Panel Layout Container --- */
 .editorial-container {
   display: grid;
@@ -335,7 +405,9 @@ body.light-theme .moon-icon {
 
 .page-section.hero-section {
   opacity: 1;
-  transform: translateY(0);
+  transform: none; /* Must be 'none' not translateY(0) — identity transforms still create
+                     stacking contexts, which would cap child z-index within this context
+                     and prevent the game canvas from exceeding the overlay z-indexes. */
   transition: none;
 }
 
@@ -510,11 +582,11 @@ body.light-theme .pulse-dot {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-body.light-theme .game-canvas-container {
-  background-color: rgba(33, 28, 24, 0.04);
+  /* Opaque background + z-index above all texture overlays (9995-9997).
+     This makes the game panel immune to noise grain, drifting grid, and
+     the mouse spotlight — they all render beneath this container. */
+  background-color: var(--bg-color);
+  z-index: 9998;
 }
 
 #gameCanvas {

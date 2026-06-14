@@ -1,4 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // --- Mouse Grid Spotlight ---
+  const spotlight = document.getElementById("gridSpotlight");
+  const gameDashboard = document.querySelector(".game-dashboard");
+  if (spotlight) {
+    let rafPending = false;
+
+    document.addEventListener("mousemove", (e) => {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(() => {
+        // Suppress spotlight when mouse is inside the game panel
+        if (gameDashboard) {
+          const r = gameDashboard.getBoundingClientRect();
+          if (e.clientX >= r.left && e.clientX <= r.right &&
+              e.clientY >= r.top  && e.clientY <= r.bottom) {
+            spotlight.style.opacity = "0";
+            rafPending = false;
+            return;
+          }
+        }
+        spotlight.style.setProperty("--mx", e.clientX + "px");
+        spotlight.style.setProperty("--my", e.clientY + "px");
+        spotlight.style.opacity = "0.2";
+        rafPending = false;
+      });
+    });
+
+    document.addEventListener("mouseleave", () => {
+      spotlight.style.opacity = "0";
+    });
+  }
+
   const mainContainer = document.getElementById("mainContainer");
   const sidebarNav = document.getElementById("sidebarNav");
   const navItems = document.querySelectorAll(".sidebar-nav .nav-item, .mobile-nav-dock .dock-item");
@@ -494,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw faint grid backing
+      // Draw faint grid backing (game's own grid, not related to body overlays)
       ctx.strokeStyle = gridColor;
       ctx.lineWidth = 0.5;
 
